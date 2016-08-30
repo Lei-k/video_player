@@ -1,10 +1,13 @@
 package lei.k.application;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,6 +26,9 @@ public class Main extends Application {
 	
 	private ObservableList<MediaInfo> mediaInfoList = FXCollections.observableArrayList();
 	
+	private String serverURL = "http://lei-k.ddns.net/hls";
+	private String mediaListLocation = "/media.list";
+	
 	private Media media;
 	
 	private Stage primaryStage;
@@ -32,16 +38,23 @@ public class Main extends Application {
 	private VideoViewController videoViewController;
 	
 	public Main(){
-		media = new Media("file:/home/k/Videos/Luna_Haruna.mp4");
-		File file = new File(Main.class.getResource("resources/play.list.example").getPath());
-		loadMediaInfoList(file);
+		media = new Media(Main.class.getResource("resources/Luna_Haruna.mp4").toString());
+		try{
+			URL u = new URL(serverURL + mediaListLocation);
+			URLConnection uc = u.openConnection();
+			loadMediaInfoList(uc.getInputStream());
+		}catch(MalformedURLException e){
+			e.printStackTrace();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
 	}
 	
-	
-	public void loadMediaInfoList(File file){
-		try (BufferedReader bufferReader = new BufferedReader(new FileReader(file))){
+	public void loadMediaInfoList(InputStream in){
+		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in))){
 			String line = null;
-			while((line = bufferReader.readLine()) != null){
+			while((line = bufferedReader.readLine()) != null){
 				String[] elements = line.split(" ");
 				if(elements[0].charAt(0) == '#') continue; // ignore comment ('#' at the first char in string line represent a comment)
 				if(elements.length == 0)
@@ -49,7 +62,7 @@ public class Main extends Application {
 			    MediaInfo mediaInfo = new MediaInfo();
 			    mediaInfo.setId(Integer.parseInt(elements[0]));
 			    mediaInfo.setName(elements[1]);
-			    mediaInfo.setURI(new SimpleStringProperty(elements[2]));
+			    mediaInfo.setURI(new SimpleStringProperty(serverURL+ elements[2]));
 			    mediaInfoList.add(mediaInfo);
 			}
 		} catch (FileNotFoundException e) {
@@ -119,6 +132,10 @@ public class Main extends Application {
 	
 	public BorderPane getVideoViewPane(){
 		return videoViewPane;
+	}
+	
+	public String getServerURL(){
+		return serverURL;
 	}
 	
 	public void start(Stage primaryStage){
