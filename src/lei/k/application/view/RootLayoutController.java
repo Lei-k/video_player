@@ -31,7 +31,25 @@ public class RootLayoutController {
 		
 		listView.setItems(main.getMediaInfoList());
 		
-		listView.setCellFactory(new StringListCellFactory());
+		/*
+		 * get the solution from 
+		 * http://docs.oracle.com/javafx/2/ui_controls/list-view.htm
+		 * and modify the article solution method to lambda method
+		 */
+		listView.setCellFactory((ListView<MediaInfo> mediaInfoListView) -> {
+			class StringListCell extends ListCell<MediaInfo> {
+		        @Override
+		        protected void updateItem(MediaInfo mediaInfo, boolean b) {
+		            super.updateItem(mediaInfo, b);
+
+		            if (mediaInfo != null) {
+		                setText(mediaInfo.getName());
+		            }
+		        }
+		    }
+			
+			return new StringListCell();
+		});
 		
 		/*
 		 * update
@@ -45,24 +63,6 @@ public class RootLayoutController {
 			}
 		});
 		
-	}
-	
-	class StringListCellFactory implements  Callback<ListView<MediaInfo>, ListCell<MediaInfo>> {
-	    @Override
-	    public ListCell<MediaInfo> call(ListView<MediaInfo> mediaInfoListView) {
-	        return new StringListCell();
-	    }
-
-	    class StringListCell extends ListCell<MediaInfo> {
-	        @Override
-	        protected void updateItem(MediaInfo mediaInfo, boolean b) {
-	            super.updateItem(mediaInfo, b);
-
-	            if (mediaInfo != null) {
-	                setText(mediaInfo.getName());
-	            }
-	        }
-	    }
 	}
 	
 	@FXML
