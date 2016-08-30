@@ -34,6 +34,7 @@ public class RootLayoutController {
 		listView.setCellFactory(new StringListCellFactory());
 		
 		/*
+		 * update
 		 * get the solution
 		 * from http://stackoverflow.com/questions/22542015/how-to-add-a-mouse-doubleclick-event-listener-to-the-cells-of-a-listview-in-java
 		 */
