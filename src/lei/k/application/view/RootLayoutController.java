@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import lei.k.application.Main;
@@ -31,6 +32,17 @@ public class RootLayoutController {
 		listView.setItems(main.getMediaInfoList());
 		
 		listView.setCellFactory(new StringListCellFactory());
+		
+		/*
+		 * get the solution
+		 * from http://stackoverflow.com/questions/22542015/how-to-add-a-mouse-doubleclick-event-listener-to-the-cells-of-a-listview-in-java
+		 */
+		listView.setOnMouseClicked((MouseEvent e) -> {
+			if(e.getClickCount() == 2){
+				MediaInfo mediaInfo = listView.getSelectionModel().getSelectedItem();
+				main.resetMedia(mediaInfo.getURI().getValue());
+			}
+		});
 		
 	}
 	
