@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.media.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lei.k.application.view.VideoViewController">
+   <bottom>
+      <HBox fx:id="mediaBar" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+         <children>
+          <Button fx:id="rewindButton" mnemonicParsing="false" onMouseClicked="#rewindButtonClicked" prefWidth="20.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="playButton" mnemonicParsing="false" onMouseClicked="#playButtonClicked" prefWidth="20.0">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="forwardButton" mnemonicParsing="false" onMouseClicked="#forwardButtonClicked" prefWidth="20.0">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Button>
+            <Slider fx:id="sliderDuration" max="1.0" prefWidth="130.0">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Slider>
+            <Label fx:id="lblDuration" text="00:00/0:00" />
+            <Label text="Volume:">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <Slider fx:id="sliderVolume" max="1.0" prefWidth="70.0" />
+            <Label text="Balance:">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <Slider fx:id="sliderBalance" max="1.0" min="-1.0" prefWidth="60.0" />
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <MediaView fx:id="mediaView" disable="true" focusTraversable="true" preserveRatio="false" BorderPane.alignment="CENTER">
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </MediaView>
+   </center>
+</BorderPane>
