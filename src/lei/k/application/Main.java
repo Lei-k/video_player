@@ -43,7 +43,7 @@ public class Main extends Application {
 			String line = null;
 			while((line = bufferReader.readLine()) != null){
 				String[] elements = line.split(" ");
-				if(elements[0].charAt(0) == '#') continue;
+				if(elements[0].charAt(0) == '#') continue; // ignore comment ('#' at the first char in string line represent a comment)
 				if(elements.length == 0)
 					break;
 			    MediaInfo mediaInfo = new MediaInfo();
@@ -58,10 +58,6 @@ public class Main extends Application {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		for(MediaInfo info : mediaInfoList){
-			System.out.println("id: " + info.getId() + ", name: " + info.getName() + ", URI: " + info.getURI());
 		}
 	}
 	
