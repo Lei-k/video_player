@@ -33,7 +33,7 @@ public class Main extends Application {
 	
 	public Main(){
 		media = new Media("file:/home/k/Videos/Luna_Haruna.mp4");
-		File file = new File("/home/k/playlistexample.txt");
+		File file = new File(Main.class.getResource("resources/play.list.example").getPath());
 		loadMediaInfoList(file);
 	}
 	
